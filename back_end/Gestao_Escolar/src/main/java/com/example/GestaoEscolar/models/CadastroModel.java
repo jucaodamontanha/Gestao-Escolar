@@ -20,11 +20,11 @@ public class CadastroModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String nomeCompleto;
-    private BigDecimal ra;
+    private Long ra;
     private String endereco;
     private String bairro;
-    private Integer cep;
-    private Integer telefone;
+    private Long cep;
+    private Long telefone;
     private String nomeMaeCompleto;
     private String nomePaiCompleto;
     private String usuario;

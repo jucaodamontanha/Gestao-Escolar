@@ -39,6 +39,26 @@ public class CadastroController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(cadastro.get());
     }
+    @PutMapping("/cadastro/{id}")
+    public ResponseEntity<Object> updateCadastro(@PathVariable(value = "id")UUID id,
+                                                 @RequestBody @Valid CadastroDto cadastroDto){
+        Optional<CadastroModel> cadastro = cadastroRepository.findById(id);
+        if (cadastro.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cadastro Não Encontrado");
+        }
+        var cadastroModel = cadastro.get();
+        BeanUtils.copyProperties(cadastroDto, cadastroModel);
+        return ResponseEntity.status(HttpStatus.OK).body(cadastroRepository.save(cadastroModel));
+    }
+    @DeleteMapping("/cadastro/{id}")
+    public ResponseEntity<Object> deleteCadastro(@PathVariable(value = "id")UUID id) {
+        Optional<CadastroModel> cadastro = cadastroRepository.findById(id);
+        if (cadastro.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cadastro Não Encontrado");
+        }
+        cadastroRepository.delete(cadastro.get());
+        return ResponseEntity.status(HttpStatus.OK).body("Cdastro deletado com sucesso!");
+    }
 
 
 }
